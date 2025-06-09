@@ -12,5 +12,11 @@ router.use(ensureLoggedIn);
 router.get("/", postsCtrl.index);
 // POST /api/posts (CREATE action)
 router.post("/", postsCtrl.create);
+// GET /api/posts/:postId (SHOW action)
+router.get("/:postId", postsCtrl.show);
+// PUT /api/posts/:postId (UPDATE action)
+router.put("/:postId", postsCtrl.update);
+// DELETE /api/posts/:postId (DELETE action)
+router.delete("/:postId", postsCtrl.delete);
 
 module.exports = router;
