@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Routes, Route } from 'react-router';
-import { getUser } from '../../services/authService';
-import HomePage from '../HomePage/HomePage';
-import PostListPage from '../PostListPage/PostListPage';
-import NewPostPage from '../NewPostPage/NewPostPage';
-import SignUpPage from '../SignUpPage/SignUpPage';
-import LogInPage from '../LogInPage/LogInPage';
-import NavBar from '../../components/NavBar/NavBar';
-import './App.css';
+import { useState } from "react";
+import { Routes, Route } from "react-router";
+import { getUser } from "../../services/authService";
+import HomePage from "../HomePage/HomePage";
+import PostListPage from "../PostListPage/PostListPage";
+import NewPostPage from "../NewPostPage/NewPostPage";
+import SignUpPage from "../SignUpPage/SignUpPage";
+import LogInPage from "../LogInPage/LogInPage";
+import NavBar from "../../components/NavBar/NavBar";
+import "./App.css";
 
 export default function App() {
   const [user, setUser] = useState(getUser());
@@ -26,6 +26,7 @@ export default function App() {
         ) : (
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/posts" element={<PostListPage />} />
             <Route path="/signup" element={<SignUpPage setUser={setUser} />} />
             <Route path="/login" element={<LogInPage setUser={setUser} />} />
             <Route path="*" element={null} />
@@ -35,4 +36,3 @@ export default function App() {
     </main>
   );
 }
-

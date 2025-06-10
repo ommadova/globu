@@ -1,3 +1,48 @@
+import { useEffect, useState } from "react";
+import * as postService from "../../services/postService";
+import PostCard from "../../components/PostCard/PostCard";
+import "./HomePage.css";
+
 export default function HomePage() {
-  return <h1>Home Page</h1>
+  const [groupedPosts, setGroupedPosts] = useState({});
+
+  useEffect(() => {
+    async function fetchRecentPosts() {
+      const allPosts = await postService.index();
+      const slicedPosts = allPosts.slice(0, 12); // Show more for better grouping
+
+      const grouped = slicedPosts.reduce((acc, post) => {
+        const country =
+          post.country === "Other" ? post.customCountry : post.country;
+        if (!acc[country]) acc[country] = [];
+        acc[country].push(post);
+        return acc;
+      }, {});
+
+      setGroupedPosts(grouped);
+    }
+
+    fetchRecentPosts();
+  }, []);
+
+  return (
+    <div className="home-page">
+      <h1 className="recent-posts-title">Recent Posts</h1>
+
+      {Object.keys(groupedPosts).length ? (
+        Object.entries(groupedPosts).map(([country, posts]) => (
+          <div key={country} className="country-section">
+            <h2 className="country-title">{country}</h2>
+            <div className="posts-grid">
+              {posts.map((post) => (
+                <PostCard key={post._id} post={post} />
+              ))}
+            </div>
+          </div>
+        ))
+      ) : (
+        <p>No recent posts found.</p>
+      )}
+    </div>
+  );
 }

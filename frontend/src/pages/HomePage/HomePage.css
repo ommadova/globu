@@ -1,0 +1,40 @@
+.home-page {
+  padding: 2rem 1rem;
+  background-color: #f9f9f9;
+}
+
+.recent-posts-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+/* Post card grid */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+  padding: 0 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.country-section {
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
+
+.country-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin: 2rem auto 1rem;
+  border-left: 4px solid #3b82f6;
+  padding-left: 0.5rem;
+  max-width: 1200px;
+  padding-left: 1rem;
+}
