@@ -11,9 +11,8 @@ export default function PostCard({ post }) {
 
       <div className="post-card-content">
         <h3 className="post-title">{post.title}</h3>
-        <p className="post-country">{country}</p>
+        <p className="post-country">{country}</p>{" "}
         <p className="post-snippet">{post.content?.slice(0, 100)}...</p>
-
         <div className="post-footer">
           <Link to={`/posts/${post._id}`} className="read-more">
             Read More →

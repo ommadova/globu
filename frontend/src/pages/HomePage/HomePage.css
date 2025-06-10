@@ -1,6 +1,8 @@
 .home-page {
   padding: 2rem 1rem;
   background-color: #f9f9f9;
+  width: 100%;
+  max-width: 100%;
 }
 
 .recent-posts-title {
@@ -13,19 +15,17 @@
 /* Post card grid */
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  justify-items: center;
-  padding: 0 1rem;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .country-section {
-  max-width: 1200px;
-  margin: 0 auto 3rem;
-  padding: 0 1rem;
+  margin-bottom: 3rem;
+  width: 100%;
 }
 
 .country-title {

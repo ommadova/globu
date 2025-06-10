@@ -30,9 +30,8 @@ export default function HomePage() {
       <h1 className="recent-posts-title">Recent Posts</h1>
 
       {Object.keys(groupedPosts).length ? (
-        Object.entries(groupedPosts).map(([country, posts]) => (
-          <div key={country} className="country-section">
-            <h2 className="country-title">{country}</h2>
+        Object.entries(groupedPosts).map(([_, posts]) => (
+          <div key={posts[0]._id} className="country-section">
             <div className="posts-grid">
               {posts.map((post) => (
                 <PostCard key={post._id} post={post} />
