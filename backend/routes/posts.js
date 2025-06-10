@@ -18,5 +18,13 @@ router.get("/:postId", postsCtrl.show);
 router.put("/:postId", postsCtrl.update);
 // DELETE /api/posts/:postId (DELETE action)
 router.delete("/:postId", postsCtrl.delete);
+// POST /api/posts/:postId/comments (CREATE comment action)
+router.post("/:postId/comments", postsCtrl.createComment);
+// POST /api/posts/:postId/favorite (FAVORITE action)
+router.post("/:postId/favorite", postsCtrl.favorite);
+// POST /api/posts/:postId/images (UPLOAD image action)
+router.post("/:postId/images", postsCtrl.addImages);
+// DELETE /api/posts/:postId/images/:imageId (DELETE image action)
+router.delete("/:postId/images", postsCtrl.deleteImage);
 
 module.exports = router;
