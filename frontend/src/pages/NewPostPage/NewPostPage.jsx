@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import * as postService from "../../services/postService";
+import "./NewPostPage.css";
 
 export default function NewPostPage() {
   const [formData, setFormData] = useState({

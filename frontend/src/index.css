@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color: #1a1a1a;
+  color: #3a638f;
   background-color: whitesmoke;
 
   font-synthesis: none;
@@ -27,20 +27,19 @@ h2 {
 }
 
 button {
-  border: 0.5vmin solid #1a1a1a;
-  border-radius: 0.5vmin;
-  padding: 0.8vmin;
-  font-size: 2vmin;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  color: whitesmoke;
+  align-self: flex-start;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  background-color: #3a638f;
+  color: white;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: white;
-  color: #1a1a1a;
+  background-color: #3b82f6;
   border-color: #1a1a1a;
 }
 
@@ -52,7 +51,7 @@ form {
   display: grid;
   gap: 1.2vmin;
   padding: 4vmin;
-  border: 0.5vmin solid #1a1a1a;
+  border: 0.5vmin solid #245982;
   border-radius: 1vmin;
 }
 
@@ -61,11 +60,13 @@ select,
 textarea {
   padding: 0.7vmin;
   font-size: 2vmin;
-  border: 0.3vmin solid #1a1a1a;
+  border: 0.3vmin solid #245982;
   border-radius: 0.5vmin;
+  color: #d9a880;
+  font-weight: bold;
 }
 
-form>button:last-child {
+form > button:last-child {
   margin-top: 2vmin;
 }
 
