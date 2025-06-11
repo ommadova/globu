@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import * as postService from '../../services/postService';
+import { useState, useEffect } from "react";
+import * as postService from "../../services/postService";
+import PostCard from "../../components/PostCard/PostCard"; //  Reused  card
 
 export default function PostListPage() {
   const [posts, setPosts] = useState([]);
@@ -13,15 +14,18 @@ export default function PostListPage() {
   }, []);
 
   return (
-    <>
-      <h1>Post List</h1>
-      {posts.length ? 
-        <ul>
-          {posts.map((post) => <li key={post._id}>{post.content}</li>)}
-        </ul>
-        :
-        <p>No Posts Yet!</p>
-      }
-    </>
+    <div className="post-list-page">
+      <h1 className="post-list-title">All Posts</h1>
+
+      {posts.length ? (
+        <div className="posts-grid">
+          {posts.map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))}
+        </div>
+      ) : (
+        <p>No posts yet!</p>
+      )}
+    </div>
   );
 }
