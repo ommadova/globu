@@ -8,18 +8,18 @@ import PostDetailsPage from "../PostDetailsPage/PostDetailsPage";
 import SignUpPage from "../SignUpPage/SignUpPage";
 import LogInPage from "../LogInPage/LogInPage";
 import NavBar from "../../components/NavBar/NavBar";
+import * as postService from "../../services/postService";
 import "./App.css";
-import posts from "../../../../backend/controllers/posts";
 
 export default function App() {
   const [user, setUser] = useState(getUser());
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
 
   const handleAddPost = async (postFormData) => {
     try {
       const newPost = await postService.create(postFormData);
-      setPost([newPost, ...posts]);
+      setPosts([newPost, ...posts]);
       navigate("/posts");
     } catch (error) {
       console.error("Error creating post:", error.message);
