@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route } from "react-router";
+import { Routes, Route, useNavigate } from "react-router";
 import { getUser } from "../../services/authService";
 import HomePage from "../HomePage/HomePage";
 import PostListPage from "../PostListPage/PostListPage";
@@ -9,9 +9,22 @@ import SignUpPage from "../SignUpPage/SignUpPage";
 import LogInPage from "../LogInPage/LogInPage";
 import NavBar from "../../components/NavBar/NavBar";
 import "./App.css";
+import posts from "../../../../backend/controllers/posts";
 
 export default function App() {
   const [user, setUser] = useState(getUser());
+  const [post, setPost] = useState([]);
+  const navigate = useNavigate();
+
+  const handleAddPost = async (postFormData) => {
+    try {
+      const newPost = await postService.create(postFormData);
+      setPost([newPost, ...posts]);
+      navigate("/posts");
+    } catch (error) {
+      console.error("Error creating post:", error.message);
+    }
+  };
 
   return (
     <main className="App">
@@ -21,7 +34,12 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/posts" element={<PostListPage />} />
-            <Route path="/posts/new" element={<NewPostPage />} />
+            <Route
+              path="/posts/new"
+              element={
+                <NewPostPage handleAddPost={handleAddPost} posts={posts} />
+              }
+            />
             <Route path="/posts/:postId" element={<PostDetailsPage />} />
             <Route path="*" element={null} />
           </Routes>

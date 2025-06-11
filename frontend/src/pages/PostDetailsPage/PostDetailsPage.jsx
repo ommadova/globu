@@ -1,19 +1,27 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import * as postService from "../../services/postService";
+import "./PostDetailsPage.css";
 
 export default function PostDetailsPage() {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchPost() {
-      const fetchedPost = await postService.show(postId); // Your API call
-      setPost(fetchedPost);
+      try {
+        const fetchedPost = await postService.show(postId);
+        setPost(fetchedPost);
+      } catch (error) {
+        console.error("Error fetching post:", error);
+        setError("Failed to load post");
+      }
     }
     fetchPost();
   }, [postId]);
 
+  if (error) return <p>{error}</p>;
   if (!post) return <p>Loading...</p>;
 
   const country = post.country === "Other" ? post.customCountry : post.country;
