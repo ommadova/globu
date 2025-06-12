@@ -10,6 +10,7 @@ import LogInPage from "../LogInPage/LogInPage";
 import NavBar from "../../components/NavBar/NavBar";
 import * as postService from "../../services/postService";
 import "./App.css";
+import { set } from "mongoose";
 
 export default function App() {
   const [user, setUser] = useState(getUser());
@@ -26,6 +27,12 @@ export default function App() {
     }
   };
 
+  const handleDeletePost = async (postId) => {
+    const deletedPost = await postService.deletePost(postId);
+    setPosts(posts.filter((post) => post._id !== postId));
+    navigate("/posts");
+  };
+
   return (
     <main className="App">
       <NavBar user={user} setUser={setUser} />
@@ -33,14 +40,18 @@ export default function App() {
         {user ? (
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/posts" element={<PostListPage />} />
+            <Route path="/posts" element={<PostListPage posts={posts} />} />
+            <Route
+              path="/posts/:postId"
+              element={<PostDetailsPage handleDeletePost={handleDeletePost} />}
+            />
             <Route
               path="/posts/new"
               element={
                 <NewPostPage handleAddPost={handleAddPost} posts={posts} />
               }
             />
-            <Route path="/posts/:postId" element={<PostDetailsPage />} />
+
             <Route path="*" element={null} />
           </Routes>
         ) : (

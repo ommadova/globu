@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, Link } from "react-router";
 import * as postService from "../../services/postService";
 import "./PostDetailsPage.css";
 
-export default function PostDetailsPage() {
+export default function PostDetailsPage(props) {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [error, setError] = useState("");
@@ -76,11 +76,20 @@ export default function PostDetailsPage() {
         <p>
           <strong>Favorites:</strong> {post.favoritedBy.length}
         </p>
+        {post.user._id === post.user._id && (
+          <>
+            <button
+              onClick={() => props.handleDeletePost(postId)}
+              className="btn-delete"
+            >
+              Delete
+            </button>
+            <button className="btn-edit">Edit</button>
+          </>
+        )}
       </div>
       <div className="post-actions">
         <button className="btn-favorite">Favorite</button>
-        <button className="btn-edit">Edit</button>
-        <button className="btn-delete">Delete</button>
       </div>
     </div>
   );
