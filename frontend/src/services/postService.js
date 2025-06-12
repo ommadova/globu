@@ -6,8 +6,8 @@ export async function index() {
   return sendRequest(BASE_URL);
 }
 
-export async function create(postData) {
-  return sendRequest(BASE_URL, "POST", postData);
+export async function create(formData) {
+  return sendRequest(BASE_URL, "POST", formData);
 }
 
 export async function show(postId) {

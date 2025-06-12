@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import * as postService from "../../services/postService";
 import "./NewPostPage.css";
@@ -11,6 +11,7 @@ export default function NewPostPage({
   const { postId } = useParams();
   const isEdit = Boolean(postId);
   const navigate = useNavigate();
+  const fileInputRef = useRef();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -66,22 +67,26 @@ export default function NewPostPage({
   async function handleSubmit(evt) {
     evt.preventDefault();
 
-    const payload = {
-      ...formData,
-      places: formData.places.split(",").map((item) => item.trim()),
-      foods: formData.foods.split(",").map((item) => item.trim()),
-      drinks: formData.drinks.split(",").map((item) => item.trim()),
-      images: formData.images.filter(Boolean).map((url) => ({ url })),
-    };
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("country", formData.country);
+    formDataToSend.append("customCountry", formData.customCountry);
+    formDataToSend.append("content", formData.content);
+    formDataToSend.append("places", formData.places);
+    formDataToSend.append("foods", formData.foods);
+    formDataToSend.append("drinks", formData.drinks);
+
+    if (fileInputRef.current && fileInputRef.current.files.length > 0) {
+      formDataToSend.append("image", fileInputRef.current.files[0]);
+    }
 
     try {
       if (isEdit && handleUpdatePost) {
-        await handleUpdatePost(postId, payload);
+        await handleUpdatePost(postId, formDataToSend);
       } else if (handleAddPost) {
-        await handleAddPost(payload);
+        await handleAddPost(formDataToSend);
       } else {
-        // fallback (in case props aren't passed)
-        await postService.create(payload);
+        await postService.create(formDataToSend);
         navigate("/posts");
       }
     } catch (err) {
@@ -191,14 +196,11 @@ export default function NewPostPage({
               placeholder="e.g. Matcha Latte - Nara Café (https://goo.gl/maps/matcha123)"
             />
 
-            <label>Image URL</label>
+            <label>Image File</label>
             <input
-              name="images"
-              value={formData.images[0] || ""}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, images: [e.target.value] }))
-              }
-              placeholder="https://your-image-url.com"
+              type="file"
+              accept=".png, .jpg, .jpeg, .gif"
+              ref={fileInputRef}
             />
           </>
         )}

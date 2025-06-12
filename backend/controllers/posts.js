@@ -8,8 +8,6 @@ module.exports = {
   delete: deletePost,
   createComment,
   favorite,
-  addImages,
-  deleteImage,
 };
 
 async function index(req, res) {
@@ -142,60 +140,6 @@ async function favorite(req, res) {
       favoritedCount: post.favoritedBy.length,
       isFavorited: post.favoritedBy.some((id) => id.toString() === userId),
     });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-}
-
-async function addImages(req, res) {
-  try {
-    const post = await Post.findById(req.params.postId);
-    if (!post) return res.status(404).json({ message: "Post not found" });
-
-    if (post.user.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ message: "Unauthorized" });
-    }
-
-    const { images } = req.body;
-    if (!Array.isArray(images) || images.length === 0) {
-      return res
-        .status(400)
-        .json({ message: "An array of image URLs is required" });
-    }
-
-    for (const img of images) {
-      if (img.url) post.images.push({ url: img.url });
-    }
-
-    await post.save();
-
-    res.status(200).json(post.images);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-}
-
-async function deleteImage(req, res) {
-  try {
-    const post = await Post.findById(req.params.postId);
-    if (!post) return res.status(404).json({ message: "Post not found" });
-
-    if (post.user.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ message: "Unauthorized" });
-    }
-
-    const { url } = req.body;
-    if (!url) return res.status(400).json({ message: "Image URL required" });
-
-    const initialCount = post.images.length;
-    post.images = post.images.filter((img) => img.url !== url);
-
-    if (post.images.length === initialCount) {
-      return res.status(404).json({ message: "Image not found" });
-    }
-
-    await post.save();
-    res.status(200).json({ message: "Image removed", images: post.images });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

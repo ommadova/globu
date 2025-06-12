@@ -1,12 +1,5 @@
 const mongoose = require("mongoose");
 
-const imageSchema = new mongoose.Schema(
-  {
-    url: { type: String, required: true },
-  },
-  { _id: false }
-);
-
 const commentSchema = new mongoose.Schema(
   {
     text: {
@@ -56,11 +49,14 @@ const postSchema = new mongoose.Schema(
     places: [String],
     foods: [String],
     drinks: [String],
+    imageUrl: {
+      type: String,
+      default: "https://i.imgur.com/KTEjbsw.png",
+    },
 
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     favoritedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     comments: [commentSchema],
-    images: [imageSchema],
   },
   {
     timestamps: true,
