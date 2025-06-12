@@ -1,4 +1,7 @@
 const Post = require("../models/post");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+
+const { S3_REGION, S3_BUCKET, S3_BASE_URL } = process.env;
 
 module.exports = {
   index,
@@ -9,6 +12,21 @@ module.exports = {
   createComment,
   favorite,
 };
+
+// --- Helper function to upload a file to S3 ---
+async function uploadFile(file) {
+  const s3 = new S3Client({ region: S3_REGION });
+
+  const key = `${Date.now()}-${file.originalname}`;
+  const params = {
+    Bucket: S3_BUCKET,
+    Key: key,
+    Body: file.buffer,
+  };
+
+  await s3.send(new PutObjectCommand(params));
+  return `${S3_BASE_URL}/${S3_BUCKET}/${key}`;
+}
 
 async function index(req, res) {
   try {
