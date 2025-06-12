@@ -10,7 +10,6 @@ import LogInPage from "../LogInPage/LogInPage";
 import NavBar from "../../components/NavBar/NavBar";
 import * as postService from "../../services/postService";
 import "./App.css";
-import { set } from "mongoose";
 
 export default function App() {
   const [user, setUser] = useState(getUser());
@@ -33,6 +32,12 @@ export default function App() {
     navigate("/posts");
   };
 
+  const handleUpdatePost = async (postId, postFormData) => {
+    const updatedPost = await postService.update(postId, postFormData);
+    setPosts(posts.map((post) => (post._id === postId ? updatedPost : post)));
+    navigate(`/posts/${postId}`);
+  };
+
   return (
     <main className="App">
       <NavBar user={user} setUser={setUser} />
@@ -49,6 +54,15 @@ export default function App() {
               path="/posts/new"
               element={
                 <NewPostPage handleAddPost={handleAddPost} posts={posts} />
+              }
+            />
+            <Route
+              path="/posts/:postId/edit"
+              element={
+                <NewPostPage
+                  handleUpdatePost={handleUpdatePost}
+                  posts={posts}
+                />
               }
             />
 

@@ -17,3 +17,7 @@ export async function show(postId) {
 export async function deletePost(postId) {
   return sendRequest(`${BASE_URL}/${postId}`, "DELETE");
 }
+
+export async function update(postId, postData) {
+  return sendRequest(`${BASE_URL}/${postId}`, "PUT", postData);
+}

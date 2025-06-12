@@ -1,9 +1,17 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
 import * as postService from "../../services/postService";
 import "./NewPostPage.css";
 
-export default function NewPostPage() {
+export default function NewPostPage({
+  handleAddPost,
+  handleUpdatePost,
+  posts,
+}) {
+  const { postId } = useParams();
+  const isEdit = Boolean(postId);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     title: "",
     country: "",
@@ -16,7 +24,36 @@ export default function NewPostPage() {
   });
 
   const [errorMsg, setErrorMsg] = useState("");
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      const postData = await postService.show(postId);
+      setFormData({
+        title: postData.title || "",
+        country: postData.country || "",
+        customCountry: postData.customCountry || "",
+        content: postData.content || "",
+        places: (postData.places || []).join(", "),
+        foods: (postData.foods || []).join(", "),
+        drinks: (postData.drinks || []).join(", "),
+        images: (postData.images || []).map((img) => img.url),
+      });
+    };
+
+    if (isEdit) fetchPost();
+
+    return () =>
+      setFormData({
+        title: "",
+        country: "",
+        customCountry: "",
+        content: "",
+        places: "",
+        foods: "",
+        drinks: "",
+        images: [""],
+      });
+  }, [isEdit, postId]);
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -38,18 +75,28 @@ export default function NewPostPage() {
     };
 
     try {
-      await postService.create(payload);
-      navigate("/");
+      if (isEdit && handleUpdatePost) {
+        await handleUpdatePost(postId, payload);
+      } else if (handleAddPost) {
+        await handleAddPost(payload);
+      } else {
+        // fallback (in case props aren't passed)
+        await postService.create(payload);
+        navigate("/posts");
+      }
     } catch (err) {
       console.error(err);
-      setErrorMsg("Failed to create post.");
+      setErrorMsg("Failed to save post.");
     }
   }
+
   const essentialsFilled =
     formData.title.trim() && formData.country.trim() && formData.content.trim();
 
   return (
     <div className="new-post-page">
+      <h1>{postId ? "Edit Post" : "New Post"}</h1>
+
       <h2>Create a New Post</h2>
 
       <form onSubmit={handleSubmit}>
@@ -156,7 +203,7 @@ export default function NewPostPage() {
           </>
         )}
 
-        <button type="submit">Create Post</button>
+        <button type="submit">{isEdit ? "Update Post" : "Create Post"}</button>
       </form>
 
       {errorMsg && <p className="error-message">{errorMsg}</p>}

@@ -84,7 +84,10 @@ export default function PostDetailsPage(props) {
             >
               Delete
             </button>
-            <button className="btn-edit">Edit</button>
+            <Link to={`/posts/${postId}/edit`}>
+              {" "}
+              <button className="btn-edit">Edit</button> <br />{" "}
+            </Link>
           </>
         )}
       </div>
