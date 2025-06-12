@@ -42,46 +42,49 @@ export default function App() {
     <main className="App">
       <NavBar user={user} setUser={setUser} />
       <section id="main-section">
-        {user ? (
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/posts" element={<PostListPage posts={posts} />} />
-            <Route
-              path="/posts/:postId"
-              element={
-                <PostDetailsPage
-                  user={user}
-                  handleDeletePost={handleDeletePost}
-                />
-              }
-            />
-            <Route
-              path="/posts/new"
-              element={
-                <NewPostPage handleAddPost={handleAddPost} posts={posts} />
-              }
-            />
-            <Route
-              path="/posts/:postId/edit"
-              element={
-                <NewPostPage
-                  handleUpdatePost={handleUpdatePost}
-                  posts={posts}
-                />
-              }
-            />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/posts" element={<PostListPage posts={posts} />} />
+          <Route
+            path="/posts/:postId"
+            element={
+              <PostDetailsPage
+                user={user}
+                handleDeletePost={handleDeletePost}
+              />
+            }
+          />
 
-            <Route path="*" element={null} />
-          </Routes>
-        ) : (
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/posts" element={<PostListPage posts={posts} />} />
-            <Route path="/signup" element={<SignUpPage setUser={setUser} />} />
-            <Route path="/login" element={<LogInPage setUser={setUser} />} />
-            <Route path="*" element={null} />
-          </Routes>
-        )}
+          {user ? (
+            <>
+              <Route
+                path="/posts/new"
+                element={
+                  <NewPostPage handleAddPost={handleAddPost} posts={posts} />
+                }
+              />
+              <Route
+                path="/posts/:postId/edit"
+                element={
+                  <NewPostPage
+                    handleUpdatePost={handleUpdatePost}
+                    posts={posts}
+                  />
+                }
+              />
+            </>
+          ) : (
+            <>
+              <Route
+                path="/signup"
+                element={<SignUpPage setUser={setUser} />}
+              />
+              <Route path="/login" element={<LogInPage setUser={setUser} />} />
+            </>
+          )}
+
+          <Route path="*" element={null} />
+        </Routes>
       </section>
     </main>
   );

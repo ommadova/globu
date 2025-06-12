@@ -9,7 +9,7 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchRecentPosts() {
       const allPosts = await postService.index();
-      const slicedPosts = allPosts.slice(0, 12);
+      const slicedPosts = allPosts.slice(0, 3);
       setPosts(slicedPosts);
     }
 
