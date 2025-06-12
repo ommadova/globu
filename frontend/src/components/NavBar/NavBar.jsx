@@ -15,12 +15,13 @@ export default function NavBar({ user, setUser }) {
     <nav className="NavBar">
       <NavLink to="/">Home</NavLink>
       &nbsp; | &nbsp;
+      <NavLink to="/posts" end>
+        Post List
+      </NavLink>
+      &nbsp; | &nbsp;
       {user ? (
         <>
-          <NavLink to="/posts" end>
-            Post List
-          </NavLink>
-          &nbsp; | &nbsp;
+          &nbsp; &nbsp;
           <NavLink to="/posts/new">New Post</NavLink>
           &nbsp; | &nbsp;
           <Link to="/" onClick={handleLogOut}>

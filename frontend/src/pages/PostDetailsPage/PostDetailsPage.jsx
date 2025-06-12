@@ -76,7 +76,7 @@ export default function PostDetailsPage(props) {
         <p>
           <strong>Favorites:</strong> {post.favoritedBy.length}
         </p>
-        {post.user._id === post.user._id && (
+        {props.user && props.user._id === post.user._id && (
           <>
             <button
               onClick={() => props.handleDeletePost(postId)}
@@ -84,9 +84,10 @@ export default function PostDetailsPage(props) {
             >
               Delete
             </button>
+            &nbsp;
             <Link to={`/posts/${postId}/edit`}>
               {" "}
-              <button className="btn-edit">Edit</button> <br />{" "}
+              <button className="btn-edit">Edit</button> &nbsp;{" "}
             </Link>
           </>
         )}

@@ -48,7 +48,12 @@ export default function App() {
             <Route path="/posts" element={<PostListPage posts={posts} />} />
             <Route
               path="/posts/:postId"
-              element={<PostDetailsPage handleDeletePost={handleDeletePost} />}
+              element={
+                <PostDetailsPage
+                  user={user}
+                  handleDeletePost={handleDeletePost}
+                />
+              }
             />
             <Route
               path="/posts/new"
@@ -71,7 +76,7 @@ export default function App() {
         ) : (
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/posts" element={<PostListPage />} />
+            <Route path="/posts" element={<PostListPage posts={posts} />} />
             <Route path="/signup" element={<SignUpPage setUser={setUser} />} />
             <Route path="/login" element={<LogInPage setUser={setUser} />} />
             <Route path="*" element={null} />
