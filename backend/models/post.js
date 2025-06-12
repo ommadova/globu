@@ -49,6 +49,11 @@ const postSchema = new mongoose.Schema(
     places: [String],
     foods: [String],
     drinks: [String],
+    images: [
+      {
+        url: { type: String, required: true },
+      },
+    ],
     imageUrl: {
       type: String,
       default: "https://i.imgur.com/KTEjbsw.png",

@@ -77,7 +77,10 @@ export default function NewPostPage({
     formDataToSend.append("drinks", formData.drinks);
 
     if (fileInputRef.current && fileInputRef.current.files.length > 0) {
-      formDataToSend.append("image", fileInputRef.current.files[0]);
+      const files = Array.from(fileInputRef.current.files).slice(0, 3);
+      for (const file of files) {
+        formDataToSend.append("images", file);
+      }
     }
 
     try {
@@ -196,11 +199,18 @@ export default function NewPostPage({
               placeholder="e.g. Matcha Latte - Nara Café (https://goo.gl/maps/matcha123)"
             />
 
-            <label>Image File</label>
+            <label>Upload up to 3 Images</label>
             <input
               type="file"
-              accept=".png, .jpg, .jpeg, .gif"
+              accept="image/*"
+              multiple
               ref={fileInputRef}
+              onChange={(e) => {
+                if (e.target.files.length > 3) {
+                  alert("You can only upload up to 3 images.");
+                  e.target.value = ""; // Reset the input
+                }
+              }}
             />
           </>
         )}

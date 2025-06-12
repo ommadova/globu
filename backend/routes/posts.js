@@ -14,7 +14,7 @@ router.get("/:postId", postsCtrl.show);
 // Protect all defined routes
 router.use(ensureLoggedIn);
 // POST /api/posts (CREATE action)
-router.post("/", upload.single("image"), postsCtrl.create);
+router.post("/", upload.array("images", 3), postsCtrl.create);
 // PUT /api/posts/:postId (UPDATE action)
 router.put("/:postId", postsCtrl.update);
 // DELETE /api/posts/:postId (DELETE action)

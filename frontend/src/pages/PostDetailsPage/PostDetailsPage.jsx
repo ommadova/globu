@@ -31,13 +31,19 @@ export default function PostDetailsPage(props) {
       <h1>{post.title}</h1>
       <p className="post-country">{country}</p>
 
-      {post.images?.[0]?.url && (
-        <img
-          src={post.images[0].url}
-          alt={post.title}
-          className="post-main-image"
-        />
+      {post.images?.length > 0 && (
+        <div className="post-image-gallery">
+          {post.images.slice(0, 3).map((img, idx) => (
+            <img
+              key={idx}
+              src={img.url}
+              alt={`Post image ${idx + 1}`}
+              className="post-image"
+            />
+          ))}
+        </div>
       )}
+
       <div className="post-content">
         <p>{post.content}</p>
       </div>

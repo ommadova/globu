@@ -2,13 +2,13 @@ import { Link } from "react-router";
 import "./PostCard.css";
 
 export default function PostCard({ post }) {
-  const image = post.images?.[0]?.url;
   const country = post.country === "Other" ? post.customCountry : post.country;
 
   return (
     <div className="post-card">
-      {image && <img src={image} alt={post.title} className="post-image" />}
-
+      {post.imageUrl && (
+        <img src={post.imageUrl} alt={post.title} className="post-image" />
+      )}
       <div className="post-card-content">
         <h3 className="post-title">{post.title}</h3>
         <p className="post-country">{country}</p>{" "}

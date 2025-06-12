@@ -50,11 +50,20 @@ async function index(req, res) {
 async function create(req, res) {
   try {
     req.body.user = req.user._id;
+
+    if (req.files && req.files.length > 0) {
+      const uploadedUrls = await Promise.all(
+        req.files.map((file) => uploadFile(file))
+      );
+      req.body.images = uploadedUrls.map((url) => ({ url }));
+      req.body.imageUrl = uploadedUrls[0];
+    }
+
     const post = await Post.create(req.body);
     res.json(post);
   } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: "Failed to creat post" });
+    console.error(err);
+    res.status(400).json({ message: "Failed to create post" });
   }
 }
 
