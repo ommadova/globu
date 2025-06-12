@@ -84,28 +84,32 @@ async function show(req, res) {
 
 async function update(req, res) {
   try {
-    const post = await Post.findByIdAndUpdate(req.params.postId);
-
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
-    }
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).json({ message: "Post not found" });
 
     if (!post.user.equals(req.user._id)) {
-      return res
-        .status(403)
-        .json({ message: "You are not allowed to update this post 🙁" });
+      return res.status(403).json({ message: "Not authorized" });
     }
+
+    // If files are included, upload them
+    if (req.files && req.files.length > 0) {
+      const uploadedUrls = await Promise.all(
+        req.files.map((file) => uploadFile(file))
+      );
+      req.body.images = uploadedUrls.map((url) => ({ url }));
+      req.body.imageUrl = uploadedUrls[0]; // update preview too
+    }
+
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.postId,
-      req.body,
+      { $set: req.body },
       { new: true }
     );
 
-    updatedPost._doc.user = req.user._id; // To Ensure the user is set to the logged-in user
     res.status(200).json(updatedPost);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Failed to update post" });
-    console.log(err);
   }
 }
 

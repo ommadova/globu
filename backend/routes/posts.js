@@ -16,7 +16,7 @@ router.use(ensureLoggedIn);
 // POST /api/posts (CREATE action)
 router.post("/", upload.array("images", 3), postsCtrl.create);
 // PUT /api/posts/:postId (UPDATE action)
-router.put("/:postId", postsCtrl.update);
+router.put("/:postId", upload.array("images"), postsCtrl.update);
 // DELETE /api/posts/:postId (DELETE action)
 router.delete("/:postId", postsCtrl.delete);
 // POST /api/posts/:postId/comments (CREATE comment action)
