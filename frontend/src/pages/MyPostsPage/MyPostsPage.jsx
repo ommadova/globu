@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
 import * as postService from "../../services/postService";
 import PostCard from "../../components/PostCard/PostCard";
-import "./MyPostsPage.css";
 
 export default function MyPostsPage({ user }) {
   const [myPosts, setMyPosts] = useState([]);
-
   useEffect(() => {
     async function fetchMyPosts() {
-      if (!user) return;
-
-      // Pass user ID as query
-      const posts = await postService.index({ user: user._id });
-      setMyPosts(posts);
+      const allPosts = await postService.index();
+      const filtered = allPosts.filter((post) => post.user._id === user._id);
+      setMyPosts(filtered);
     }
 
-    fetchMyPosts();
+    if (user) fetchMyPosts();
   }, [user]);
 
   return (
@@ -28,7 +24,7 @@ export default function MyPostsPage({ user }) {
           ))}
         </div>
       ) : (
-        <p>You haven’t created any posts yet.</p>
+        <p>You haven't created any posts yet.</p>
       )}
     </div>
   );

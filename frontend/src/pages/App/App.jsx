@@ -9,6 +9,7 @@ import SignUpPage from "../SignUpPage/SignUpPage";
 import LogInPage from "../LogInPage/LogInPage";
 import NavBar from "../../components/NavBar/NavBar";
 import * as postService from "../../services/postService";
+import MyPostsPage from "../MyPostsPage/MyPostsPage";
 import "./App.css";
 
 export default function App() {
@@ -69,6 +70,16 @@ export default function App() {
                   <NewPostPage
                     handleUpdatePost={handleUpdatePost}
                     posts={posts}
+                  />
+                }
+              />
+              <Route
+                path="/myposts"
+                element={
+                  <MyPostsPage
+                    user={user}
+                    posts={posts}
+                    handleDeletePost={handleDeletePost}
                   />
                 }
               />

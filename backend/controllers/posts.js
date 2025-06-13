@@ -30,13 +30,6 @@ async function uploadFile(file) {
 
 async function index(req, res) {
   try {
-    const filter = {};
-
-    // Optional filtering by country
-    if (req.query.country) {
-      filter.country = req.query.country;
-    }
-
     const posts = await Post.find({})
       .populate("user", "name") // get name
       .sort({ createdAt: -1 }); // Newest first

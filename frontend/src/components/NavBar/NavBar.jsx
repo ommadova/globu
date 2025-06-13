@@ -21,7 +21,8 @@ export default function NavBar({ user, setUser }) {
       &nbsp; | &nbsp;
       {user ? (
         <>
-          &nbsp; &nbsp;
+          <NavLink to="/myposts">My Posts</NavLink>
+          &nbsp; | &nbsp; &nbsp; &nbsp;
           <NavLink to="/posts/new">New Post</NavLink>
           &nbsp; | &nbsp;
           <Link to="/" onClick={handleLogOut}>

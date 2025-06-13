@@ -2,8 +2,10 @@ import sendRequest from "./sendRequest";
 
 const BASE_URL = "/api/posts";
 
-export async function index() {
-  return sendRequest(BASE_URL);
+export async function index(query = {}) {
+  const queryString = new URLSearchParams(query).toString();
+  const url = queryString ? `${BASE_URL}?${queryString}` : BASE_URL;
+  return sendRequest(url);
 }
 
 export async function create(formDataToSend) {
