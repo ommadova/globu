@@ -7,6 +7,7 @@ const CommentForm = (props) => {
   const [formData, setFormData] = useState({ text: "" });
   const navigate = useNavigate();
   const { postId, commentId } = useParams();
+  console.log(postId, commentId);
 
   useEffect(() => {
     async function fetchCommentToEdit() {
@@ -30,7 +31,13 @@ const CommentForm = (props) => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    props.handleAddComment(formData);
+    if (postId && commentId) {
+      commentService.update(postId, commentId, formData);
+      navigate(`/posts/${postId}`);
+    } else {
+      props.handleAddComment(formData);
+    }
+
     setFormData({ text: "" });
   };
 

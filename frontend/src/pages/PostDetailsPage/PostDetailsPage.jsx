@@ -99,7 +99,7 @@ export default function PostDetailsPage(props) {
             <div key={comment._id} className="comment">
               <header>
                 <p>
-                  {`${comment.user?.name || "Anonymous"} Posted on
+                  {`${comment.user.name || "Anonymous"} Posted on
                   ${new Date(comment.createdAt).toLocaleDateString()}`}
                 </p>
                 {comment.user?._id === props.user?._id && (

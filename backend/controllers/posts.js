@@ -136,8 +136,11 @@ async function createComment(req, res) {
     }
     post.comments.push(req.body);
     await post.save();
-
-    const newComment = post.comments[post.comments.length - 1];
+    const updatedPost = await Post.findById(req.params.postId).populate(
+      "comments.user",
+      "name"
+    );
+    const newComment = updatedPost.comments[updatedPost.comments.length - 1];
     res.status(201).json(newComment);
   } catch (err) {
     console.log(err);
