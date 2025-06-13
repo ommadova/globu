@@ -10,6 +10,7 @@ import LogInPage from "../LogInPage/LogInPage";
 import NavBar from "../../components/NavBar/NavBar";
 import * as postService from "../../services/postService";
 import MyPostsPage from "../MyPostsPage/MyPostsPage";
+import CommentForm from "../../components/CommentForm/CommentForm";
 import "./App.css";
 
 export default function App() {

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import * as postService from "../../services/postService";
+import CommentForm from "../../components/CommentForm/CommentForm";
+import * as commentService from "../../services/commentService";
 import "./PostDetailsPage.css";
 
 export default function PostDetailsPage(props) {
@@ -23,6 +25,14 @@ export default function PostDetailsPage(props) {
 
   if (error) return <p>{error}</p>;
   if (!post) return <p>Loading...</p>;
+
+  const handleAddComment = async (commentFormData) => {
+    const newComment = await postService.createComment(postId, commentFormData);
+    setPost({
+      ...post,
+      comments: [...post.comments, newComment],
+    });
+  };
 
   const country = post.country === "Other" ? post.customCountry : post.country;
 
@@ -66,6 +76,7 @@ export default function PostDetailsPage(props) {
       </div>
       <div className="post-comments">
         <h2>Comments</h2>
+
         {post.comments.length ? (
           post.comments.map((comment) => (
             <div key={comment._id} className="comment">
@@ -78,6 +89,7 @@ export default function PostDetailsPage(props) {
         ) : (
           <p>No comments yet.</p>
         )}
+        <CommentForm handleAddComment={handleAddComment} />
       </div>
       <div className="post-favorites">
         <p>
