@@ -28,10 +28,24 @@ export default function PostDetailsPage(props) {
 
   const handleAddComment = async (commentFormData) => {
     const newComment = await postService.createComment(postId, commentFormData);
+
     setPost({
       ...post,
       comments: [...post.comments, newComment],
     });
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await commentService.deleteComment(postId, commentId);
+      setPost({
+        ...post,
+        comments: post.comments.filter((comment) => comment._id !== commentId),
+      });
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+      setError("Failed to delete comment");
+    }
   };
 
   const country = post.country === "Other" ? post.customCountry : post.country;
@@ -74,23 +88,37 @@ export default function PostDetailsPage(props) {
           <strong>Author:</strong> {post.user?.name.toUpperCase() || "Unknown"}
         </p>
       </div>
-      <div className="post-comments">
-        <h2>Comments</h2>
+      {post.user && (
+        <div className="post-comments">
+          <h2>Comments</h2>
 
-        {post.comments.length ? (
-          post.comments.map((comment) => (
+          <CommentForm postId={post._id} handleAddComment={handleAddComment} />
+          {!post.comments.length && <p>There are no comments.</p>}
+
+          {post.comments.map((comment) => (
             <div key={comment._id} className="comment">
+              <header>
+                <p>
+                  {`${comment.user?.name || "Anonymous"} Posted on
+                  ${new Date(comment.createdAt).toLocaleDateString()}`}
+                </p>
+                {comment.user?._id === props.user?._id && (
+                  <>
+                    <Link to={`/posts/${postId}/comments/${comment._id}/edit`}>
+                      <button> Edit</button>&nbsp;
+                    </Link>
+                    <button onClick={() => handleDeleteComment(comment._id)}>
+                      Delete
+                    </button>
+                  </>
+                )}
+              </header>
               <p>{comment.text}</p>
-              <p className="comment-author">
-                <strong>{comment.user?.name || "Anonymous"}</strong>
-              </p>
             </div>
-          ))
-        ) : (
-          <p>No comments yet.</p>
-        )}
-        <CommentForm handleAddComment={handleAddComment} />
-      </div>
+          ))}
+        </div>
+      )}
+
       <div className="post-favorites">
         <p>
           <strong>Favorites:</strong> {post.favoritedBy.length}

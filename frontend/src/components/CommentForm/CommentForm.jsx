@@ -9,16 +9,19 @@ const CommentForm = (props) => {
   const { postId, commentId } = useParams();
 
   useEffect(() => {
-    const fetchPost = async () => {
+    async function fetchCommentToEdit() {
       const postData = await postService.show(postId);
-      const existingComment = postData.comments.find(
+      const foundComment = postData.comments.find(
         (comment) => comment._id === commentId
       );
-      if (existingComment) {
-        setFormData({ text: existingComment.text });
+      if (foundComment) {
+        setFormData({ text: foundComment.text });
       }
-    };
-    if (postId && commentId) fetchPost();
+    }
+
+    if (postId && commentId) {
+      fetchCommentToEdit();
+    }
   }, [postId, commentId]);
 
   const handleChange = (evt) => {
@@ -27,29 +30,19 @@ const CommentForm = (props) => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-
-    try {
-      if (postId && commentId) {
-        await commentService.updateComment(postId, commentId, formData);
-        navigate(`/posts/${postId}`);
-      } else {
-        props.handleAddComment(formData);
-        setFormData({ text: "" });
-      }
-    } catch (err) {
-      console.error("Error submitting comment:", err.message);
-    }
+    props.handleAddComment(formData);
+    setFormData({ text: "" });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="text">Comment</label>
       <textarea
         id="text"
         name="text"
         value={formData.text}
         onChange={handleChange}
         required
+        placeholder="Write your comment here..."
       />
       <button type="submit">Submit Comment</button>
     </form>

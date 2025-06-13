@@ -84,6 +84,10 @@ export default function App() {
                   />
                 }
               />
+              <Route
+                path="/posts/:postId/comments/:commentId/edit"
+                element={<CommentForm />}
+              />
             </>
           ) : (
             <>

@@ -23,3 +23,7 @@ export async function deletePost(postId) {
 export async function update(postId, postData) {
   return sendRequest(`${BASE_URL}/${postId}`, "PUT", postData);
 }
+
+export function createComment(postId, commentData) {
+  return sendRequest(`${BASE_URL}/${postId}/comments`, "POST", commentData);
+}

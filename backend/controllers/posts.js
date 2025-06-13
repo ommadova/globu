@@ -84,7 +84,6 @@ async function update(req, res) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    // If files are included, upload them
     if (req.files && req.files.length > 0) {
       const uploadedUrls = await Promise.all(
         req.files.map((file) => uploadFile(file))
@@ -131,6 +130,10 @@ async function createComment(req, res) {
   try {
     req.body.user = req.user._id;
     const post = await Post.findById(req.params.postId);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
     post.comments.push(req.body);
     await post.save();
 
