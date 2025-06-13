@@ -97,7 +97,7 @@ async function update(req, res) {
         req.files.map((file) => uploadFile(file))
       );
       req.body.images = uploadedUrls.map((url) => ({ url }));
-      req.body.imageUrl = uploadedUrls[0]; // update preview too
+      req.body.imageUrl = uploadedUrls[0];
     }
 
     const updatedPost = await Post.findByIdAndUpdate(
