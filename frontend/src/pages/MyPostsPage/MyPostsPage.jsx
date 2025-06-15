@@ -6,8 +6,8 @@ export default function MyPostsPage({ user }) {
   const [myPosts, setMyPosts] = useState([]);
   useEffect(() => {
     async function fetchMyPosts() {
-      const allPosts = await postService.index();
-      const filtered = allPosts.filter((post) => post.user._id === user._id);
+      const { posts } = await postService.index();
+      const filtered = posts.filter((post) => post.user._id === user._id);
       setMyPosts(filtered);
     }
 

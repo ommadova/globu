@@ -1,9 +1,12 @@
 .home-page {
-  padding: 2rem 1rem;
   background-color: #f9f9f9;
-  width: 100%;
+  text-shadow: 2px 2px 4px rgba(131, 186, 214, 0.7);
+}
+
+.home-page-content {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
 .recent-posts-title {
@@ -37,4 +40,40 @@
   padding-left: 1rem;
   text-align: left;
   margin-bottom: 1rem;
+}
+
+.hero-banner {
+  position: relative;
+  height: 50vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: left;
+}
+
+.hero-background {
+  background-image: url("/images/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 90%;
+  width: 100%;
+  z-index: 1;
+}
+
+.hero-text {
+  position: relative;
+  z-index: 2;
+  color: white;
+  padding: 2rem;
+  max-width: 700px;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 600;
 }

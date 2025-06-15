@@ -24,17 +24,30 @@ export default function HomePage() {
 
   return (
     <div className="home-page">
-      <h1 className="recent-posts-title">Recent Posts</h1>
-
-      {posts.length ? (
-        <div className="posts-grid">
-          {posts.map((post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
+      <section className="hero-banner">
+        <div
+          className="hero-background"
+          role="img"
+          aria-label="Mountains and sunrise"
+        ></div>
+        <div className="hero-text">
+          <h1>Share your journey with us!</h1>
         </div>
-      ) : (
-        <p>No recent posts found.</p>
-      )}
+      </section>
+
+      <section className="home-page">
+        <h1 className="recent-posts-title">Recent Posts</h1>
+
+        {posts.length ? (
+          <div className="posts-grid">
+            {posts.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
+          </div>
+        ) : (
+          <p>No recent posts found.</p>
+        )}
+      </section>
     </div>
   );
 }

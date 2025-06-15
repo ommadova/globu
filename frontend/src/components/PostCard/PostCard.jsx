@@ -15,7 +15,7 @@ export default function PostCard({ post }) {
         <p className="post-snippet">{post.content?.slice(0, 100)}...</p>
         <div className="post-footer">
           <Link to={`/posts/${post._id}`} className="read-more">
-            Read More →
+            Read More ...
           </Link>
         </div>
       </div>
