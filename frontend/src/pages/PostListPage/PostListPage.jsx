@@ -28,16 +28,16 @@ export default function PostListPage() {
   return (
     <div className="post-list-page">
       <h1 className="post-list-title">All Posts</h1>
-
-      <label htmlFor="country-input">Search by Country 🔎 </label>
-      <input
-        type="text"
-        id="country-input"
-        value={selectedCountry}
-        onChange={(e) => setSelectedCountry(e.target.value)}
-        placeholder="Type a country..."
-      />
-
+      <div className="search-container">
+        <label htmlFor="country-input">Search by Country 🔎 </label>
+        <input
+          type="text"
+          id="country-input"
+          value={selectedCountry}
+          onChange={(e) => setSelectedCountry(e.target.value)}
+          placeholder="Type a country..."
+        />
+      </div>
       {filteredPosts.length ? (
         <div className="posts-grid">
           {filteredPosts.map((post) => (

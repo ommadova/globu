@@ -8,9 +8,15 @@ export default function HomePage() {
 
   useEffect(() => {
     async function fetchRecentPosts() {
-      const allPosts = await postService.index();
-      const slicedPosts = allPosts.slice(0, 3);
-      setPosts(slicedPosts);
+      try {
+        const { posts } = await postService.index();
+        const sorted = posts.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setPosts(sorted.slice(0, 3)); // Get the 3 most recent posts
+      } catch (error) {
+        console.error("Error fetching recent posts:", error);
+      }
     }
 
     fetchRecentPosts();
