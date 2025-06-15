@@ -33,7 +33,9 @@ async function index(req, res) {
     const posts = await Post.find({})
       .populate("user", "name") // get name
       .sort({ createdAt: -1 }); // Newest first
-    res.json(posts);
+
+    const countries = Post.schema.path("country").enumValues; // Get enum values for country
+    res.json({ posts, countries });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to fetch posts" });
