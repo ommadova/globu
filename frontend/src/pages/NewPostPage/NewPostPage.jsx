@@ -103,9 +103,7 @@ export default function NewPostPage({
 
   return (
     <div className="new-post-page">
-      <h1>{postId ? "Edit Post" : "New Post"}</h1>
-
-      <h2>Create a New Post</h2>
+      <h1>{postId ? "Edit Post" : "Create New Post"}</h1>
 
       <form onSubmit={handleSubmit}>
         <label>Title</label>
@@ -172,10 +170,7 @@ export default function NewPostPage({
 
         {essentialsFilled && (
           <>
-            <hr />
-            <h4>Optional Details</h4>
-
-            <label>Places (comma separated)</label>
+            <label>Places (optional)</label>
             <input
               name="places"
               value={formData.places}
@@ -183,7 +178,7 @@ export default function NewPostPage({
               placeholder="e.g. Blue Bottle Coffee - Tokyo (https://goo.gl/maps/abc123)"
             />
 
-            <label>Foods (comma separated)</label>
+            <label>Foods (optional)</label>
             <input
               name="foods"
               value={formData.foods}
@@ -191,7 +186,7 @@ export default function NewPostPage({
               placeholder="e.g. Sushi - Tsukiji Market (https://example.com/sushi)"
             />
 
-            <label>Drinks (comma separated)</label>
+            <label>Drinks (optional)</label>
             <input
               name="drinks"
               value={formData.drinks}
