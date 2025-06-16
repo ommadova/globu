@@ -100,25 +100,29 @@ export default function PostDetailsPage(props) {
             .map((comment) => (
               <div key={comment._id} className="comment">
                 <header>
-                  <p>
+                  <p className="comment-meta">
                     {`${comment.user.name || "Anonymous"} Posted on 
               ${new Date(comment.createdAt).toLocaleDateString()}`}
                   </p>
                 </header>
-                <p>{comment.text}</p>
-                <button onClick={() => setReplyToCommentId(comment._id)}>
-                  Reply
-                </button>
-                {comment.user?._id === props.user?._id && (
-                  <>
-                    <Link to={`/posts/${postId}/comments/${comment._id}/edit`}>
-                      <button>Edit</button>
-                    </Link>
-                    <button onClick={() => handleDeleteComment(comment._id)}>
-                      Delete
-                    </button>
-                  </>
-                )}
+                <p className="comment-text">{comment.text}</p>
+                <div className="comment-actions">
+                  <button onClick={() => setReplyToCommentId(comment._id)}>
+                    Reply
+                  </button>
+                  {comment.user?._id === props.user?._id && (
+                    <>
+                      <Link
+                        to={`/posts/${postId}/comments/${comment._id}/edit`}
+                      >
+                        <button>✏️</button>
+                      </Link>
+                      <button onClick={() => handleDeleteComment(comment._id)}>
+                        ❌
+                      </button>
+                    </>
+                  )}
+                </div>
 
                 {/* Replies */}
                 <div className="replies">
@@ -137,6 +141,9 @@ export default function PostDetailsPage(props) {
                             </strong>{" "}
                             on {new Date(reply.createdAt).toLocaleDateString()}
                           </p>
+                        </header>
+                        <p className="comment-text">{reply.text}</p>
+                        <div className="comment-actions">
                           <button
                             onClick={() => setReplyToCommentId(reply._id)}
                           >
@@ -147,17 +154,16 @@ export default function PostDetailsPage(props) {
                               <Link
                                 to={`/posts/${postId}/comments/${reply._id}/edit`}
                               >
-                                <button>Edit</button>
+                                <button>✏️</button>
                               </Link>
                               <button
                                 onClick={() => handleDeleteComment(reply._id)}
                               >
-                                Delete
+                                ❌
                               </button>
                             </>
                           )}
-                        </header>
-                        <p>{reply.text}</p>
+                        </div>
                       </div>
                     ))}
                 </div>
