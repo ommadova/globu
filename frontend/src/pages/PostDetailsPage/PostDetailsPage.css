@@ -16,14 +16,20 @@
 }
 
 .post-meta,
-.post-comments {
-  margin-top: 1.5rem;
+.post-comments,
+h2 {
+  margin-top: 3rem;
+  margin-bottom: 0.5rem;
+  gap: 2rem;
 }
 
 .comment {
-  border-top: 1px solid #e5e7eb;
-  padding-top: 1rem;
-  margin-top: 1rem;
+  padding: 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .post-image-gallery {

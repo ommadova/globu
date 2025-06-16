@@ -31,11 +31,16 @@ const CommentForm = (props) => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+
+    const data = { ...formData };
+    if (props.replyTo) data.replyTo = props.replyTo;
+
     if (postId && commentId) {
-      await commentService.update(postId, commentId, formData);
+      await commentService.update(postId, commentId, data);
       navigate(`/posts/${postId}`);
     } else {
-      props.handleAddComment(formData);
+      await props.handleAddComment(data);
+      if (props.clearReply) props.clearReply();
     }
 
     setFormData({ text: "" });
@@ -43,6 +48,7 @@ const CommentForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {props.replyTo && <p className="replying-to">Replying to a comment...</p>}
       <textarea
         id="text"
         name="text"

@@ -34,6 +34,7 @@ export default function PostDetailsPage(props) {
       ...post,
       comments: [...post.comments, newComment],
     });
+    setReplyToCommentId(null);
   };
 
   const handleDeleteComment = async (commentId) => {
@@ -91,39 +92,83 @@ export default function PostDetailsPage(props) {
       </div>
       {post.user && (
         <div className="post-comments">
-          <h2>Comments</h2>
-
+          <h2>Comments</h2> &nbsp;
           <CommentForm
             postId={post._id}
             handleAddComment={handleAddComment}
             replyTo={replyToCommentId}
           />
           {!post.comments.length && <p>There are no comments.</p>}
+          {post.comments
+            .filter((comment) => !comment.replyTo)
+            .map((comment) => (
+              <div key={comment._id} className="comment">
+                <header>
+                  <p>
+                    {`${comment.user.name || "Anonymous"} Posted on 
+              ${new Date(comment.createdAt).toLocaleDateString()}`}
+                  </p>
+                  <button onClick={() => setReplyToCommentId(comment._id)}>
+                    Reply
+                  </button>
+                  {comment.user?._id === props.user?._id && (
+                    <>
+                      <Link
+                        to={`/posts/${postId}/comments/${comment._id}/edit`}
+                      >
+                        <button>Edit</button>
+                      </Link>
+                      <button onClick={() => handleDeleteComment(comment._id)}>
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </header>
+                <p>{comment.text}</p>
 
-          {post.comments.map((comment) => (
-            <div key={comment._id} className="comment">
-              <header>
-                <p>
-                  {`${comment.user.name || "Anonymous"} Posted on
-                  ${new Date(comment.createdAt).toLocaleDateString()}`}
-                </p>
-                {comment.user?._id === props.user?._id && (
-                  <>
-                    <button onClick={() => setReplyToCommentId(comment._id)}>
-                      Reply
-                    </button>
-                    <Link to={`/posts/${postId}/comments/${comment._id}/edit`}>
-                      <button> Edit</button>&nbsp;
-                    </Link>
-                    <button onClick={() => handleDeleteComment(comment._id)}>
-                      Delete
-                    </button>
-                  </>
-                )}
-              </header>
-              <p>{comment.text}</p>
-            </div>
-          ))}
+                {/* Replies */}
+                <div className="replies">
+                  {post.comments
+                    .filter((reply) => reply.replyTo === comment._id)
+                    .map((reply) => (
+                      <div key={reply._id} className="comment reply">
+                        <header>
+                          <p>
+                            <strong>{reply.user?.name || "Anonymous"}</strong>{" "}
+                            replied to{" "}
+                            <strong>
+                              {post.comments.find(
+                                (c) => c._id === reply.replyTo
+                              )?.user?.name || "Anonymous"}
+                            </strong>{" "}
+                            on {new Date(reply.createdAt).toLocaleDateString()}
+                          </p>
+                          <button
+                            onClick={() => setReplyToCommentId(reply._id)}
+                          >
+                            Reply
+                          </button>
+                          {reply.user?._id === props.user?._id && (
+                            <>
+                              <Link
+                                to={`/posts/${postId}/comments/${reply._id}/edit`}
+                              >
+                                <button>Edit</button>
+                              </Link>
+                              <button
+                                onClick={() => handleDeleteComment(reply._id)}
+                              >
+                                Delete
+                              </button>
+                            </>
+                          )}
+                        </header>
+                        <p>{reply.text}</p>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            ))}
         </div>
       )}
 
