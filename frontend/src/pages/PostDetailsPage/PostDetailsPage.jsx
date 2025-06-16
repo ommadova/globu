@@ -4,12 +4,14 @@ import * as postService from "../../services/postService";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import * as commentService from "../../services/commentService";
 import "./PostDetailsPage.css";
+import { set } from "mongoose";
 
 export default function PostDetailsPage(props) {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [error, setError] = useState("");
   const [replyToCommentId, setReplyToCommentId] = useState(null);
+  const [isFavoriting, setIsFavoriting] = useState(false);
 
   useEffect(() => {
     async function fetchPost() {
@@ -50,13 +52,29 @@ export default function PostDetailsPage(props) {
     }
   };
 
+  const handlefavorite = async () => {
+    try {
+      setIsFavoriting(true);
+      const result = await postService.favorite(post._id);
+      setPost({
+        ...post,
+        favoritedBy: result.isFavorited
+          ? [...post.favoritedBy, props.user._id]
+          : post.favoritedBy.filter((id) => id !== props.user._id),
+      });
+    } catch (error) {
+      console.error("Error favoriting post:", error);
+    } finally {
+      setIsFavoriting(false);
+    }
+  };
+
   const country = post.country === "Other" ? post.customCountry : post.country;
 
   return (
     <div className="post-details">
       <h1>{post.title}</h1>
       <p className="post-country">{country}</p>
-
       <div className="post-image-gallery">
         {post.images?.length > 0 &&
           post.images
@@ -70,7 +88,6 @@ export default function PostDetailsPage(props) {
               />
             ))}
       </div>
-
       <div className="post-content">
         <p>{post.content}</p>
       </div>
@@ -179,30 +196,38 @@ export default function PostDetailsPage(props) {
           </div>
         </div>
       )}
-
-      <div className="post-favorites">
-        <p>
-          <strong>Favorites:</strong> {post.favoritedBy.length}
-        </p>
-        {props.user && props.user._id === post.user._id && (
-          <>
-            <button
-              onClick={() => props.handleDeletePost(postId)}
-              className="btn-delete"
-            >
-              Delete
-            </button>
-            &nbsp;
-            <Link to={`/posts/${postId}/edit`}>
-              {" "}
-              <button className="btn-edit">Edit</button> &nbsp;{" "}
-            </Link>
-          </>
-        )}
-      </div>
-      <div className="post-actions">
-        <button className="btn-favorite">Favorite</button>
-      </div>
+      {props.user && props.user._id === post.user._id ? (
+        <>
+          <button
+            onClick={() => props.handleDeletePost(postId)}
+            className="btn-delete"
+          >
+            Delete
+          </button>
+          &nbsp;
+          <Link to={`/posts/${postId}/edit`}>
+            {" "}
+            <button className="btn-edit">Edit</button> &nbsp;{" "}
+          </Link>
+        </>
+      ) : (
+        <div className="post-actions">
+          <button
+            className="btn-favorite"
+            onClick={handlefavorite}
+            disabled={isFavoriting}
+          >
+            {isFavoriting
+              ? "Processing..."
+              : post.favoritedBy.includes(props.user._id)
+              ? "🤍 Unfavorite"
+              : "❤️ Favorite"}
+          </button>
+        </div>
+      )}
+      <p>
+        <strong>Favorites:</strong> {post.favoritedBy.length}
+      </p>
     </div>
   );
 }
