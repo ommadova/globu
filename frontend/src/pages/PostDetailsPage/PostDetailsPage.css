@@ -16,14 +16,14 @@
 }
 
 .post-country {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #4a5568;
-  background-color: #edf2f7;
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
   display: inline-block;
-  margin-bottom: 1rem;
+  background-color: #e9e0c0;
+  color: #3c4557;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 .post-content {
   font-size: 1.05rem;
