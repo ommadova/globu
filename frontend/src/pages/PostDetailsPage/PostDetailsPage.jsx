@@ -92,12 +92,8 @@ export default function PostDetailsPage(props) {
       </div>
       {post.user && (
         <div className="post-comments">
-          <h2>Comments</h2> &nbsp;
-          <CommentForm
-            postId={post._id}
-            handleAddComment={handleAddComment}
-            replyTo={replyToCommentId}
-          />
+          <h2>Comments</h2>
+
           {!post.comments.length && <p>There are no comments.</p>}
           {post.comments
             .filter((comment) => !comment.replyTo)
@@ -108,23 +104,21 @@ export default function PostDetailsPage(props) {
                     {`${comment.user.name || "Anonymous"} Posted on 
               ${new Date(comment.createdAt).toLocaleDateString()}`}
                   </p>
-                  <button onClick={() => setReplyToCommentId(comment._id)}>
-                    Reply
-                  </button>
-                  {comment.user?._id === props.user?._id && (
-                    <>
-                      <Link
-                        to={`/posts/${postId}/comments/${comment._id}/edit`}
-                      >
-                        <button>Edit</button>
-                      </Link>
-                      <button onClick={() => handleDeleteComment(comment._id)}>
-                        Delete
-                      </button>
-                    </>
-                  )}
                 </header>
                 <p>{comment.text}</p>
+                <button onClick={() => setReplyToCommentId(comment._id)}>
+                  Reply
+                </button>
+                {comment.user?._id === props.user?._id && (
+                  <>
+                    <Link to={`/posts/${postId}/comments/${comment._id}/edit`}>
+                      <button>Edit</button>
+                    </Link>
+                    <button onClick={() => handleDeleteComment(comment._id)}>
+                      Delete
+                    </button>
+                  </>
+                )}
 
                 {/* Replies */}
                 <div className="replies">
@@ -169,6 +163,14 @@ export default function PostDetailsPage(props) {
                 </div>
               </div>
             ))}
+          <div className="comment-form-section">
+            <h3>Leave a Comment</h3>
+            <CommentForm
+              postId={post._id}
+              handleAddComment={handleAddComment}
+              replyTo={replyToCommentId}
+            />
+          </div>
         </div>
       )}
 
