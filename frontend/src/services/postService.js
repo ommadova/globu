@@ -27,3 +27,7 @@ export async function update(postId, postData) {
 export function createComment(postId, commentData) {
   return sendRequest(`${BASE_URL}/${postId}/comments`, "POST", commentData);
 }
+
+export async function favorite(postId) {
+  return sendRequest(`${BASE_URL}/${postId}/favorite`, "POST");
+}
