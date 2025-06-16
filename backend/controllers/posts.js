@@ -136,7 +136,14 @@ async function createComment(req, res) {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-    post.comments.push(req.body);
+
+    const commentData = {
+      text: req.body.text,
+      user: req.body.user,
+      replyTo: req.body.replyTo || null,
+    };
+
+    post.comments.push(commentData);
     await post.save();
     const updatedPost = await Post.findById(req.params.postId).populate(
       "comments.user",

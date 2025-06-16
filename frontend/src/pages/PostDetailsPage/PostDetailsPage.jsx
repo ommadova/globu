@@ -9,6 +9,7 @@ export default function PostDetailsPage(props) {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [error, setError] = useState("");
+  const [replyToCommentId, setReplyToCommentId] = useState(null);
 
   useEffect(() => {
     async function fetchPost() {
@@ -92,7 +93,11 @@ export default function PostDetailsPage(props) {
         <div className="post-comments">
           <h2>Comments</h2>
 
-          <CommentForm postId={post._id} handleAddComment={handleAddComment} />
+          <CommentForm
+            postId={post._id}
+            handleAddComment={handleAddComment}
+            replyTo={replyToCommentId}
+          />
           {!post.comments.length && <p>There are no comments.</p>}
 
           {post.comments.map((comment) => (
@@ -104,6 +109,9 @@ export default function PostDetailsPage(props) {
                 </p>
                 {comment.user?._id === props.user?._id && (
                   <>
+                    <button onClick={() => setReplyToCommentId(comment._id)}>
+                      Reply
+                    </button>
                     <Link to={`/posts/${postId}/comments/${comment._id}/edit`}>
                       <button> Edit</button>&nbsp;
                     </Link>
