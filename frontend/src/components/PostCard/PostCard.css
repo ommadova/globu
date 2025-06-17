@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-width: 300px;
 }
 
 .post-card:hover {
@@ -20,7 +21,7 @@
 }
 
 .post-card-content {
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -42,10 +43,10 @@
 }
 
 .post-snippet {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: #334155;
   flex-grow: 1;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .post-footer {
