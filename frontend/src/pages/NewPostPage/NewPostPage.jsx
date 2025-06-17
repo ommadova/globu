@@ -18,9 +18,9 @@ export default function NewPostPage({
     country: "",
     customCountry: "",
     content: "",
-    places: "",
-    foods: "",
-    drinks: "",
+    places: [{ name: "", link: "" }],
+    foods: [{ name: "", link: "" }],
+    drinks: [{ name: "", link: "" }],
     images: [""],
   });
 
@@ -34,9 +34,9 @@ export default function NewPostPage({
         country: postData.country || "",
         customCountry: postData.customCountry || "",
         content: postData.content || "",
-        places: (postData.places || []).join(", "),
-        foods: (postData.foods || []).join(", "),
-        drinks: (postData.drinks || []).join(", "),
+        places: postData.places || [{ name: "", link: "" }],
+        foods: postData.foods || [{ name: "", link: "" }],
+        drinks: postData.drinks || [{ name: "", link: "" }],
         images: (postData.images || []).map((img) => img.url),
       });
     };
@@ -49,9 +49,9 @@ export default function NewPostPage({
         country: "",
         customCountry: "",
         content: "",
-        places: "",
-        foods: "",
-        drinks: "",
+        places: [{ name: "", link: "" }],
+        foods: [{ name: "", link: "" }],
+        drinks: [{ name: "", link: "" }],
         images: [""],
       });
   }, [isEdit, postId]);
@@ -72,9 +72,9 @@ export default function NewPostPage({
     formDataToSend.append("country", formData.country);
     formDataToSend.append("customCountry", formData.customCountry);
     formDataToSend.append("content", formData.content);
-    formDataToSend.append("places", formData.places);
-    formDataToSend.append("foods", formData.foods);
-    formDataToSend.append("drinks", formData.drinks);
+    formDataToSend.append("places", JSON.stringify(formData.places));
+    formDataToSend.append("foods", JSON.stringify(formData.foods));
+    formDataToSend.append("drinks", JSON.stringify(formData.drinks));
 
     if (fileInputRef.current && fileInputRef.current.files.length > 0) {
       const files = Array.from(fileInputRef.current.files).slice(0, 3);
@@ -96,6 +96,12 @@ export default function NewPostPage({
       console.error(err);
       setErrorMsg("Failed to save post.");
     }
+  }
+
+  function handleArrayChange(type, idx, field, value) {
+    const updated = [...formData[type]];
+    updated[idx][field] = value;
+    setFormData({ ...formData, [type]: updated });
   }
 
   const essentialsFilled =
@@ -171,28 +177,70 @@ export default function NewPostPage({
         {essentialsFilled && (
           <>
             <label>Places (optional)</label>
-            <input
-              name="places"
-              value={formData.places}
-              onChange={handleChange}
-              placeholder="e.g. Blue Bottle Coffee - Tokyo (https://goo.gl/maps/abc123)"
-            />
+            {formData.places.map((place, idx) => (
+              <div key={idx} className="input-pair">
+                <input
+                  type="text"
+                  placeholder="Place name"
+                  value={place.name}
+                  onChange={(e) =>
+                    handleArrayChange("places", idx, "name", e.target.value)
+                  }
+                />
+                <input
+                  type="url"
+                  placeholder="Place link (optional)"
+                  value={place.link}
+                  onChange={(e) =>
+                    handleArrayChange("places", idx, "link", e.target.value)
+                  }
+                />
+              </div>
+            ))}
 
             <label>Foods (optional)</label>
-            <input
-              name="foods"
-              value={formData.foods}
-              onChange={handleChange}
-              placeholder="e.g. Sushi - Tsukiji Market (https://example.com/sushi)"
-            />
+            {formData.foods.map((food, idx) => (
+              <div key={`food-${idx}`} className="input-pair">
+                <input
+                  type="text"
+                  placeholder="Food name"
+                  value={food.name}
+                  onChange={(e) =>
+                    handleArrayChange("foods", idx, "name", e.target.value)
+                  }
+                />
+                <input
+                  type="url"
+                  placeholder="Food link"
+                  value={food.link}
+                  onChange={(e) =>
+                    handleArrayChange("foods", idx, "link", e.target.value)
+                  }
+                />
+              </div>
+            ))}
 
             <label>Drinks (optional)</label>
-            <input
-              name="drinks"
-              value={formData.drinks}
-              onChange={handleChange}
-              placeholder="e.g. Matcha Latte - Nara Café (https://goo.gl/maps/matcha123)"
-            />
+            {formData.drinks.map((drink, idx) => (
+              <div key={`drink-${idx}`} className="input-pair">
+                <input
+                  type="text"
+                  placeholder="Drink name"
+                  value={drink.name}
+                  onChange={(e) =>
+                    handleArrayChange("drinks", idx, "name", e.target.value)
+                  }
+                />
+                <input
+                  type="url"
+                  placeholder="Drink link"
+                  value={drink.link}
+                  onChange={(e) =>
+                    handleArrayChange("drinks", idx, "link", e.target.value)
+                  }
+                />
+              </div>
+            ))}
 
             <label>Upload up to 3 Images</label>
             <input

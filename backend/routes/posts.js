@@ -21,7 +21,6 @@ router.put("/:postId", upload.array("images"), postsCtrl.update);
 router.delete("/:postId", postsCtrl.delete);
 // POST /api/posts/:postId/comments (CREATE comment action)
 router.post("/:postId/comments", postsCtrl.createComment);
-// POST /api/posts/:postId/favorite (FAVORITE action)
-router.post("/:postId/favorite", postsCtrl.favorite);
+router.post("/:postId/react", postsCtrl.addReaction);
 
 module.exports = router;

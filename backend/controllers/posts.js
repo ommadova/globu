@@ -10,7 +10,7 @@ module.exports = {
   update,
   delete: deletePost,
   createComment,
-  favorite,
+  addReaction,
 };
 
 // --- Helper function to upload a file to S3 ---
@@ -54,6 +54,10 @@ async function create(req, res) {
       req.body.imageUrl = uploadedUrls[0];
     }
 
+    if (req.body.places) req.body.places = JSON.parse(req.body.places);
+    if (req.body.foods) req.body.foods = JSON.parse(req.body.foods);
+    if (req.body.drinks) req.body.drinks = JSON.parse(req.body.drinks);
+
     const post = await Post.create(req.body);
     res.json(post);
   } catch (err) {
@@ -93,6 +97,10 @@ async function update(req, res) {
       req.body.images = uploadedUrls.map((url) => ({ url }));
       req.body.imageUrl = uploadedUrls[0];
     }
+
+    if (req.body.places) req.body.places = JSON.parse(req.body.places);
+    if (req.body.foods) req.body.foods = JSON.parse(req.body.foods);
+    if (req.body.drinks) req.body.drinks = JSON.parse(req.body.drinks);
 
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.postId,
@@ -157,29 +165,34 @@ async function createComment(req, res) {
   }
 }
 
-async function favorite(req, res) {
+async function addReaction(req, res) {
   try {
+    const { emoji } = req.body;
+    const userId = req.user._id.toString();
     const post = await Post.findById(req.params.postId);
+
     if (!post) return res.status(404).json({ message: "Post not found" });
 
-    const userId = req.user._id.toString();
-    const index = post.favoritedBy.findIndex((id) => id.toString() === userId);
+    // Initialize if not present
+    if (!post.reactions.has(emoji)) {
+      post.reactions.set(emoji, []);
+    }
 
-    if (index === -1) {
-      // Not favorited yet, so add user
-      post.favoritedBy.push(userId);
+    const userIndex = post.reactions.get(emoji).indexOf(userId);
+
+    if (userIndex === -1) {
+      post.reactions.get(emoji).push(userId);
     } else {
-      // Already favorited, so remove user
-      post.favoritedBy.splice(index, 1);
+      post.reactions.get(emoji).splice(userIndex, 1);
+      if (post.reactions.get(emoji).length === 0) {
+        post.reactions.delete(emoji);
+      }
     }
 
     await post.save();
-
-    res.status(200).json({
-      favoritedCount: post.favoritedBy.length,
-      isFavorited: post.favoritedBy.some((id) => id.toString() === userId),
-    });
+    res.status(200).json({ reactions: post.reactions });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Reaction error:", err);
+    res.status(500).json({ message: "Failed to add reaction" });
   }
 }

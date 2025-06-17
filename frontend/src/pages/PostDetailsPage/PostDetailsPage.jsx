@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router";
 import * as postService from "../../services/postService";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import * as commentService from "../../services/commentService";
 import "./PostDetailsPage.css";
-import { set } from "mongoose";
+import EmojiPicker from "emoji-picker-react";
 
 export default function PostDetailsPage(props) {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [error, setError] = useState("");
   const [replyToCommentId, setReplyToCommentId] = useState(null);
-  const [isFavoriting, setIsFavoriting] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [isReacting, setIsReacting] = useState(false);
 
   useEffect(() => {
     async function fetchPost() {
@@ -52,20 +53,19 @@ export default function PostDetailsPage(props) {
     }
   };
 
-  const handlefavorite = async () => {
+  const handleEmojiClick = async (emojiObject) => {
     try {
-      setIsFavoriting(true);
-      const result = await postService.favorite(post._id);
-      setPost({
-        ...post,
-        favoritedBy: result.isFavorited
-          ? [...post.favoritedBy, props.user._id]
-          : post.favoritedBy.filter((id) => id !== props.user._id),
-      });
-    } catch (error) {
-      console.error("Error favoriting post:", error);
+      setIsReacting(true);
+      const result = await postService.reactToPost(postId, emojiObject.emoji);
+      setPost((prev) => ({
+        ...prev,
+        reactions: result.reactions,
+      }));
+    } catch (err) {
+      console.error("Reaction failed:", err);
     } finally {
-      setIsFavoriting(false);
+      setIsReacting(false);
+      setShowEmojiPicker(false);
     }
   };
 
@@ -93,19 +93,93 @@ export default function PostDetailsPage(props) {
       </div>
       <div className="post-meta">
         <p>
-          <strong>Places:</strong> {post.places?.join(", ")}
+          <strong>Places:</strong>
         </p>
+        <ul>
+          {post.places?.map((place, idx) => (
+            <li key={idx}>
+              {place.name}
+              {place.link && (
+                <>
+                  {" "}
+                  <a
+                    href={place.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    🔗
+                  </a>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+
         <p>
-          <strong>Foods:</strong> {post.foods?.join(", ")}
+          <strong>Foods:</strong>
         </p>
+        <ul>
+          {post.foods?.map((food, idx) => (
+            <li key={idx}>
+              {food.name}
+              {food.link && (
+                <>
+                  {" "}
+                  <a href={food.link} target="_blank" rel="noopener noreferrer">
+                    🔗
+                  </a>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+
         <p>
-          <strong>Drinks:</strong> {post.drinks?.join(", ")}
+          <strong>Drinks:</strong>
         </p>
+        <ul>
+          {post.drinks?.map((drink, idx) => (
+            <li key={idx}>
+              {drink.name}
+              {drink.link && (
+                <>
+                  {" "}
+                  <a
+                    href={drink.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    🔗
+                  </a>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="post-author">
         <p>
           <strong>Author:</strong> {post.user?.name.toUpperCase() || "Unknown"}
         </p>
+      </div>
+      <div className="post-reactions">
+        <h3>Reactions</h3>
+        {post.reactions &&
+          Object.entries(post.reactions).map(([emoji, users]) => (
+            <span
+              key={emoji}
+              style={{ marginRight: "10px", fontSize: "1.5rem" }}
+            >
+              {emoji} {users.length}
+            </span>
+          ))}
+
+        <div>
+          <button onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+            {showEmojiPicker ? "Cancel" : "Leave a Reaction"}
+          </button>
+          {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
+        </div>
       </div>
       {post.user && (
         <div className="post-comments">
@@ -196,7 +270,7 @@ export default function PostDetailsPage(props) {
           </div>
         </div>
       )}
-      {props.user && props.user._id === post.user._id ? (
+      {props.user && props.user._id === post.user._id && (
         <>
           <button
             onClick={() => props.handleDeletePost(postId)}
@@ -205,29 +279,12 @@ export default function PostDetailsPage(props) {
             Delete
           </button>
           &nbsp;
-          <Link to={`/posts/${postId}/edit`}>
+          <Link to={`/posts/${postId}/edit`} className="btn-edit-link">
             {" "}
             <button className="btn-edit">Edit</button> &nbsp;{" "}
           </Link>
         </>
-      ) : (
-        <div className="post-actions">
-          <button
-            className="btn-favorite"
-            onClick={handlefavorite}
-            disabled={isFavoriting}
-          >
-            {isFavoriting
-              ? "Processing..."
-              : post.favoritedBy.includes(props.user._id)
-              ? "🤍 Unfavorite"
-              : "❤️ Favorite"}
-          </button>
-        </div>
       )}
-      <p>
-        <strong>Favorites:</strong> {post.favoritedBy.length}
-      </p>
     </div>
   );
 }

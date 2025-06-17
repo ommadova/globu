@@ -51,9 +51,24 @@ const postSchema = new mongoose.Schema(
     },
     customCountry: { type: String },
     content: { type: String },
-    places: [String],
-    foods: [String],
-    drinks: [String],
+    places: [
+      {
+        name: { type: String },
+        link: { type: String },
+      },
+    ],
+    foods: [
+      {
+        name: { type: String },
+        link: { type: String },
+      },
+    ],
+    drinks: [
+      {
+        name: { type: String },
+        link: { type: String },
+      },
+    ],
     images: [
       {
         url: { type: String, required: true },
@@ -65,8 +80,13 @@ const postSchema = new mongoose.Schema(
     },
 
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    favoritedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     comments: [commentSchema],
+
+    reactions: {
+      type: Map,
+      of: [String],
+      default: {},
+    },
   },
   {
     timestamps: true,

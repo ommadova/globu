@@ -28,6 +28,6 @@ export function createComment(postId, commentData) {
   return sendRequest(`${BASE_URL}/${postId}/comments`, "POST", commentData);
 }
 
-export async function favorite(postId) {
-  return sendRequest(`${BASE_URL}/${postId}/favorite`, "POST");
+export async function reactToPost(postId, emoji) {
+  return sendRequest(`${BASE_URL}/${postId}/react`, "POST", { emoji });
 }
