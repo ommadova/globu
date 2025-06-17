@@ -1,37 +1,77 @@
 .NavBar {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  padding: 2vmin;
-  font-size: 2vmin;
-}
-
-.NavBar {
-  a {
-    border-radius: 0.8vmin;
-    padding: 0.5vmin 1.5vmin;
-    text-decoration: none;
-    color: #406689;
-    font-weight: bold;
-  }
-
-  a:hover {
-    background-color: #ccbb82;
-    color: whitesmoke;
-  }
-
-  a.active {
-    background-color: rgb(80, 124, 244);
-    color: whitesmoke;
-  }
-
-  span {
-    color: #406689;
-    font-style: italic;
-  }
+  padding: 0.4rem 0.5rem;
+  font-size: 1rem;
+  background-color: #fefefe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .logo {
   height: 40px;
   margin-right: 1.5rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #406689;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-links a:hover {
+  background-color: #ccbb82;
+  color: white;
+}
+
+.nav-links a.active {
+  background-color: #507cf4;
+  color: white;
+}
+
+.nav-links span {
+  margin-left: 1rem;
+  color: #406689;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .NavBar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .nav-links a,
+  .nav-links span {
+    padding-left: 0;
+    font-size: 1rem;
+  }
+
+  .logo {
+    height: 36px;
+    margin-bottom: 0.5rem;
+  }
 }
