@@ -13,6 +13,9 @@ export default function NavBar({ user, setUser }) {
 
   return (
     <nav className="NavBar">
+      <Link to="/">
+        <img src="/images/logo.svg" alt="plane icon" className="logo" />
+      </Link>
       <NavLink to="/">Home</NavLink>
       &nbsp; | &nbsp;
       <NavLink to="/posts" end>

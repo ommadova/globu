@@ -30,3 +30,8 @@
     font-style: italic;
   }
 }
+
+.logo {
+  height: 40px;
+  margin-right: 1.5rem;
+}
