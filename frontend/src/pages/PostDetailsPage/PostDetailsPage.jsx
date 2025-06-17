@@ -5,6 +5,7 @@ import CommentForm from "../../components/CommentForm/CommentForm";
 import * as commentService from "../../services/commentService";
 import "./PostDetailsPage.css";
 import EmojiPicker from "emoji-picker-react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 export default function PostDetailsPage(props) {
   const { postId } = useParams();
@@ -13,6 +14,7 @@ export default function PostDetailsPage(props) {
   const [replyToCommentId, setReplyToCommentId] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isReacting, setIsReacting] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     async function fetchPost() {
@@ -69,25 +71,43 @@ export default function PostDetailsPage(props) {
     }
   };
 
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? post.images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === post.images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   const country = post.country === "Other" ? post.customCountry : post.country;
 
   return (
     <div className="post-details">
       <h1>{post.title}</h1>
       <p className="post-country">{country}</p>
-      <div className="post-image-gallery">
-        {post.images?.length > 0 &&
-          post.images
-            .slice(0, 3)
-            .map((img, idx) => (
-              <img
-                key={idx}
-                src={img.url}
-                alt={`Post image ${idx + 1}`}
-                className="post-image"
-              />
-            ))}
-      </div>
+      {post.images?.length > 0 && (
+        <div className="post-image-gallery">
+          <div className="image-switcher">
+            <img
+              src={post.images[currentImageIndex].url}
+              alt={`Image ${currentImageIndex + 1}`}
+              className="post-image"
+            />
+            <div className="image-switch-buttons">
+              <button onClick={handlePrevImage} className="nav-button">
+                <FaArrowLeft />
+              </button>
+              <button onClick={handleNextImage} className="nav-button">
+                <FaArrowRight />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="post-content">
         <p>{post.content}</p>
       </div>

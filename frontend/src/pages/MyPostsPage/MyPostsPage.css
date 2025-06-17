@@ -1,0 +1,28 @@
+.my-posts-page {
+  padding: 2rem 1rem;
+  background-color: #f9f9f9;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.my-posts-page h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+}
+
+.no-posts-message {
+  font-size: 1rem;
+  color: #64748b;
+  text-align: center;
+  margin-top: 2rem;
+}

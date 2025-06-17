@@ -247,6 +247,7 @@ export default function NewPostPage({
               type="file"
               accept="image/*"
               multiple
+              className="styled-file-input"
               ref={fileInputRef}
               onChange={(e) => {
                 if (e.target.files.length > 3) {

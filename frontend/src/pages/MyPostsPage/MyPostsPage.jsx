@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import * as postService from "../../services/postService";
 import PostCard from "../../components/PostCard/PostCard";
+import "./MyPostsPage.css";
 
 export default function MyPostsPage({ user }) {
   const [myPosts, setMyPosts] = useState([]);
