@@ -121,3 +121,10 @@
 .search__icon path {
   fill: white;
 }
+
+.input::placeholder {
+  color: #9ebcd9;
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.8;
+}

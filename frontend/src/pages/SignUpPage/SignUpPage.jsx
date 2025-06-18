@@ -1,21 +1,22 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-import { signUp } from '../../services/authService';
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { signUp } from "../../services/authService";
+import "./SignUpPage.css";
 
 export default function SignUpPage({ setUser }) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirm: '',
+    name: "",
+    email: "",
+    password: "",
+    confirm: "",
   });
-  const [errorMsg, setErrorMsg] = useState('');
-   
+  const [errorMsg, setErrorMsg] = useState("");
+
   const navigate = useNavigate();
 
   function handleChange(evt) {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
-    setErrorMsg('');
+    setErrorMsg("");
   }
 
   async function handleSubmit(evt) {
@@ -23,9 +24,9 @@ export default function SignUpPage({ setUser }) {
     try {
       const user = await signUp(formData);
       setUser(user);
-      navigate('/posts');
+      navigate("/posts");
     } catch (err) {
-      setErrorMsg('Sign Up Failed - Try Again');
+      setErrorMsg("Sign Up Failed - Try Again");
     }
   }
 
@@ -33,45 +34,55 @@ export default function SignUpPage({ setUser }) {
 
   return (
     <>
-      <h2>Sign Up!</h2>
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <label>Confirm</label>
-        <input
-          type="password"
-          name="confirm"
-          value={formData.confirm}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit" disabled={disable}>
-          SIGN UP
-        </button>
-      </form>
-      <p className="error-message">&nbsp;{errorMsg}</p>
+      <div className="container-2">
+        <h2 className="heading">Sign Up!</h2>
+        <form autoComplete="off" onSubmit={handleSubmit} className="form">
+          <input
+            className="input"
+            placeholder="Name"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+
+          <input
+            className="input"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            required
+          />
+          <input
+            className="input"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Password"
+            required
+          />
+          <input
+            className="input"
+            type="password"
+            name="confirm"
+            value={formData.confirm}
+            onChange={handleChange}
+            placeholder="Confirm Password"
+            required
+          />
+          <button className="login-button" type="submit" disabled={disable}>
+            SIGN UP
+          </button>
+        </form>
+        {errorMsg && <p className="error-message">{errorMsg}</p>}
+        <p className="login-link">
+          Already have an account? <a href="/login">Log In</a>
+        </p>
+      </div>
     </>
   );
 }
