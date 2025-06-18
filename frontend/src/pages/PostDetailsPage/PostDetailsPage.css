@@ -60,6 +60,7 @@
 
 .post-image {
   width: 60%;
+  height: auto;
   max-height: 300px;
   object-fit: cover;
   border-radius: 2px;
@@ -276,4 +277,5 @@ h2 {
   display: flex;
   justify-content: center;
   margin-top: 0.5rem;
+  text-decoration: none;
 }

@@ -323,11 +323,9 @@ export default function PostDetailsPage(props) {
             </button>
             &nbsp;
             <Link to={`/posts/${postId}/edit`} className="btn-edit-link">
-              {" "}
               <button className="icon-btn">
                 <MdEdit />
-              </button>{" "}
-              &nbsp;{" "}
+              </button>
             </Link>
           </div>
         </>

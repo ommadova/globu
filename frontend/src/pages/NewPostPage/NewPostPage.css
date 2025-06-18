@@ -177,6 +177,10 @@
   background-color: #2563eb;
 }
 
+.buttons {
+  text-decoration: none;
+}
+
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .new-post-page {

@@ -259,7 +259,9 @@ export default function NewPostPage({
           </>
         )}
 
-        <button type="submit">{isEdit ? "Update Post" : "Create Post"}</button>
+        <button type="submit" className="buttons">
+          {isEdit ? "Update Post" : "Create Post"}
+        </button>
       </form>
 
       {errorMsg && <p className="error-message">{errorMsg}</p>}
