@@ -36,7 +36,11 @@ export default function HomePage() {
       </section>
 
       <section className="home-page">
-        <h1 className="recent-posts-title">Recent Posts</h1>
+        <h1 className="home-page-title">
+          Every journey has a story. Share yours, explore others', and let the
+          world be your guidebook...
+        </h1>
+        <h2 className="recent-posts-title">Recent Posts</h2>
 
         {posts.length ? (
           <div className="posts-grid">
