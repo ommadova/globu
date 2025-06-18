@@ -28,7 +28,7 @@
 .post-content {
   font-size: 1.05rem;
   line-height: 1.7;
-  color: #4d648b;
+  color: #343c4a;
   margin-top: 1.5rem;
   white-space: pre-line;
 }
@@ -55,10 +55,10 @@
 }
 
 .image-switch-buttons button {
-  background-color: #375085;
+  background-color: #5a719e;
   color: #fff;
   border: none;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.3rem;
   border-radius: 999px;
   font-size: 0.95rem;
   cursor: pointer;
@@ -71,7 +71,7 @@
 }
 
 .image-switch-buttons button:hover {
-  background-color: #1d4ed8;
+  background-color: #a3b4d5;
   transform: translateY(-2px) scale(1.03);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
 }
@@ -94,7 +94,7 @@ h2 {
 .post-meta p {
   margin: 0.3rem 0;
   font-size: 0.95rem;
-  color: #4d648b;
+  color: #343c4a;
 }
 
 .post-meta ul {
@@ -106,7 +106,7 @@ h2 {
 
 .post-meta li {
   margin-bottom: 0.4rem;
-  color: #4d648b;
+  color: #343c4a;
   font-size: 0.95rem;
   line-height: 1.5;
 }
@@ -128,9 +128,10 @@ h2 {
   margin-top: 2rem;
   padding-top: 1rem;
   font-size: 0.9rem;
-  color: #8b8166;
+  color: #6a634f;
   font-weight: bold;
   border-top: 1px solid #e2e8f0;
+  font-style: italic;
 }
 
 .comment {
@@ -180,25 +181,9 @@ h2 {
   margin-top: 0.5rem;
 }
 
-.comment-actions button {
-  background-color: #6b839b;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 0.875rem;
-  transition: background-color 0.2s ease;
-}
-
-.comment-actions button:hover {
-  background-color: #928c66;
-  transform: scale(1.02);
-}
-
 /* Comment Form Section */
 .comment-form-section {
-  width: 80%;
+  width: 55%;
   margin: 2rem auto;
   padding: 2rem;
   border-radius: 12px;
@@ -206,12 +191,12 @@ h2 {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
 }
 
 .comment-form-section textarea {
   width: 100%;
-  min-height: 80px;
+  min-height: 70px;
   padding: 0.75rem;
   border-radius: 6px;
   border: 1px solid #cbd5e0;
@@ -222,12 +207,12 @@ h2 {
 }
 
 .comment-form-section button {
-  background-color: #3182ce;
+  background-color: #5a719e;
   border: none;
   color: white;
-  padding: 0.5rem 1.25rem;
-  border-radius: 6px;
-  font-size: 1rem;
+  padding: 0.35rem 0.25rem;
+  border-radius: 999px;
+  font-size: 0.98rem;
   cursor: pointer;
 }
 
@@ -254,23 +239,6 @@ h2 {
     gap: 0.25rem;
   }
 }
-.btn-edit,
-.btn-delete {
-  background-color: #3182ce;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s ease;
-}
-
-.btn-edit:hover,
-.btn-delete:hover {
-  background-color: #2b6cb0;
-  transform: scale(1.05);
-}
 
 .btn-edit-link {
   text-decoration: none;
@@ -280,4 +248,24 @@ h2 {
   margin-top: 2rem;
   padding-top: 1rem;
   border-top: 1px solid #eee;
+  color: #6a634f;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  color: #385677;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.icon-btn:hover {
+  color: #f5f7f8;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
 }

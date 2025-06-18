@@ -6,6 +6,11 @@ import * as commentService from "../../services/commentService";
 import "./PostDetailsPage.css";
 import EmojiPicker from "emoji-picker-react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
+import { FaReply } from "react-icons/fa";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
+import { MdOutlineCancel } from "react-icons/md";
 
 export default function PostDetailsPage(props) {
   const { postId } = useParams();
@@ -195,8 +200,11 @@ export default function PostDetailsPage(props) {
           ))}
 
         <div>
-          <button onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-            {showEmojiPicker ? "Cancel" : "Leave a Reaction"}
+          <button
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            className="icon-btn"
+          >
+            {showEmojiPicker ? <MdOutlineCancel /> : <MdOutlineEmojiEmotions />}
           </button>
           {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
         </div>
@@ -218,18 +226,27 @@ export default function PostDetailsPage(props) {
                 </header>
                 <p className="comment-text">{comment.text}</p>
                 <div className="comment-actions">
-                  <button onClick={() => setReplyToCommentId(comment._id)}>
-                    Reply
+                  <button
+                    onClick={() => setReplyToCommentId(comment._id)}
+                    className="icon-btn"
+                  >
+                    <FaReply />
                   </button>
                   {comment.user?._id === props.user?._id && (
                     <>
                       <Link
                         to={`/posts/${postId}/comments/${comment._id}/edit`}
                       >
-                        <button>✏️</button>
+                        <button className="icon-btn">
+                          {" "}
+                          <MdEdit />
+                        </button>
                       </Link>
-                      <button onClick={() => handleDeleteComment(comment._id)}>
-                        ❌
+                      <button
+                        onClick={() => handleDeleteComment(comment._id)}
+                        className="icon-btn"
+                      >
+                        <MdDelete />
                       </button>
                     </>
                   )}
@@ -257,20 +274,25 @@ export default function PostDetailsPage(props) {
                         <div className="comment-actions">
                           <button
                             onClick={() => setReplyToCommentId(reply._id)}
+                            className="icon-btn"
                           >
-                            Reply
+                            <FaReply />
                           </button>
                           {reply.user?._id === props.user?._id && (
                             <>
                               <Link
                                 to={`/posts/${postId}/comments/${reply._id}/edit`}
                               >
-                                <button>✏️</button>
+                                <button className="icon-btn">
+                                  {" "}
+                                  <MdEdit />
+                                </button>
                               </Link>
                               <button
                                 onClick={() => handleDeleteComment(reply._id)}
+                                className="icon-btn"
                               >
-                                ❌
+                                <MdDelete />
                               </button>
                             </>
                           )}
@@ -292,17 +314,22 @@ export default function PostDetailsPage(props) {
       )}
       {props.user && props.user._id === post.user._id && (
         <>
-          <button
-            onClick={() => props.handleDeletePost(postId)}
-            className="btn-delete"
-          >
-            Delete
-          </button>
-          &nbsp;
-          <Link to={`/posts/${postId}/edit`} className="btn-edit-link">
-            {" "}
-            <button className="btn-edit">Edit</button> &nbsp;{" "}
-          </Link>
+          <div className="action-buttons">
+            <button
+              onClick={() => props.handleDeletePost(postId)}
+              className="icon-btn"
+            >
+              <MdDelete />
+            </button>
+            &nbsp;
+            <Link to={`/posts/${postId}/edit`} className="btn-edit-link">
+              {" "}
+              <button className="icon-btn">
+                <MdEdit />
+              </button>{" "}
+              &nbsp;{" "}
+            </Link>
+          </div>
         </>
       )}
     </div>

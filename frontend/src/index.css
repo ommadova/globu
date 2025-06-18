@@ -39,12 +39,12 @@ button {
 }
 
 button:hover {
-  background-color: #3b82f6;
+  background-color: #92b2e6;
   border-color: #1a1a1a;
 }
 
 button:disabled {
-  background-color: grey;
+  background-color: rgb(171, 190, 226);
 }
 
 form {
