@@ -28,7 +28,7 @@ export default function HomePage() {
         <div
           className="hero-background"
           role="img"
-          aria-label="Mountains and sunrise"
+          alt="Mountains and sunrise"
         ></div>
         <div className="hero-text">
           <h1>Share your journey with us!</h1>

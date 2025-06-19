@@ -33,27 +33,27 @@ As someone who loves travel and discovering new cultures, I wanted to build a sp
 <details>
   <summary>🏠 Home Page</summary>
 
-| Introduction and recent posts              |
-| ------------------------------------------ |
-| ![Home](./frontend/public/images/home.png) |
+| Introduction and recent posts     |
+| --------------------------------- |
+| ![Home](./public/images/home.png) |
 
 </details>
 
 <details>
   <summary>🗺️ Post Details</summary>
 
-| Full post content with comments and photos                 |
-| ---------------------------------------------------------- |
-| ![Post Details](./frontend/public/images/post-details.png) |
+| Full post content with comments and photos        |
+| ------------------------------------------------- |
+| ![Post Details](./public/images/post-details.png) |
 
 </details>
 
 <details>
   <summary>🔍 Search by Country</summary>
 
-| Search and filter posts interactively          |
-| ---------------------------------------------- |
-| ![Search](./frontend/public/images/search.png) |
+| Search and filter posts interactively |
+| ------------------------------------- |
+| ![Search](./public/images/search.png) |
 
 </details>
 
@@ -67,6 +67,8 @@ As someone who loves travel and discovering new cultures, I wanted to build a sp
 - ![MongoDB](https://img.shields.io/badge/-MongoDB-333?style=flat&logo=mongodb)
 - ![Mongoose](https://img.shields.io/badge/-Mongoose-333?style=flat&logo=mongoose)
 - ![CSS3](https://img.shields.io/badge/-CSS-333?style=flat&logo=css3)
+- ![JavaScript:](https://img.shields.io/badge/-JavaScript-333?style=flat&logo=javascript)
+- ![HTML5](https://img.shields.io/badge/-HTML5-333?style=flat&logo=html5)
 
 ---
 

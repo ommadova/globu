@@ -28,7 +28,6 @@ async function deleteComment(req, res) {
     const post = await Post.findById(req.params.postId);
     const comment = post.comments.id(req.params.commentId);
 
-    // ensures the current user is the author of the comment
     if (comment.user.toString() !== req.user._id) {
       return res
         .status(403)
