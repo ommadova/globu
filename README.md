@@ -33,27 +33,27 @@ As someone who loves travel and discovering new cultures, I wanted to build a sp
 <details>
   <summary>🏠 Home Page</summary>
 
-| Introduction and recent posts     |
-| --------------------------------- |
-| ![Home](./public/images/home.png) |
+| Introduction and recent posts              |
+| ------------------------------------------ |
+| ![Home](./frontend/public/images/home.png) |
 
 </details>
 
 <details>
   <summary>🗺️ Post Details</summary>
 
-| Full post content with comments and photos        |
-| ------------------------------------------------- |
-| ![Post Details](./public/images/post-details.png) |
+| Full post content with comments and photos                 |
+| ---------------------------------------------------------- |
+| ![Post Details](./frontend/public/images/post-details.png) |
 
 </details>
 
 <details>
   <summary>🔍 Search by Country</summary>
 
-| Search and filter posts interactively |
-| ------------------------------------- |
-| ![Search](./public/images/search.png) |
+| Search and filter posts interactively                |
+| ---------------------------------------------------- |
+| ![Search](./frontend/public/images/post-details.png) |
 
 </details>
 
