@@ -51,9 +51,9 @@ As someone who loves travel and discovering new cultures, I wanted to build a sp
 <details>
   <summary>🔍 Search by Country</summary>
 
-| Search and filter posts interactively                |
-| ---------------------------------------------------- |
-| ![Search](./frontend/public/images/post-details.png) |
+| Search and filter posts interactively          |
+| ---------------------------------------------- |
+| ![Search](./frontend/public/images/search.png) |
 
 </details>
 
